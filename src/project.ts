@@ -113,9 +113,35 @@ int main()
       ],
       version: 4,
     },
+    { spaces: 2 }
+  );
+
+  await Fs.outputJson(
+    Path.join(prefix, ".vscode", "tasks.json"),
     {
-      spaces: 2,
-    }
+      version: "2.0.0",
+      tasks: [
+        {
+          label: "Build Project",
+          type: "shell",
+          command: "prop-proj build --project=EpicFan",
+          group: "build",
+        },
+        {
+          label: "Load Project",
+          type: "shell",
+          command: "prop-proj load --project=EpicFan",
+          group: "build",
+        },
+        {
+          label: "Build and Run Project",
+          type: "shell",
+          command: "prop-proj play --project=EpicFan",
+          group: "build",
+        },
+      ],
+    },
+    { spaces: 2 }
   );
 
   await Fs.outputFile(
