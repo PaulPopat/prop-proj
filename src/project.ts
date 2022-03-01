@@ -89,7 +89,7 @@ async function BuildCppConfig(project: Project, prefix: string) {
             "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks",
           ],
           compilerPath: "/usr/bin/clang",
-          cStandard: "c98",
+          cStandard: "c99",
           cppStandard: "c++98",
           intelliSenseMode: "macos-clang-arm64",
         },
