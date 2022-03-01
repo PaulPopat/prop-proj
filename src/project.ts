@@ -1,7 +1,7 @@
 import "geninq";
 import { Assert } from "@paulpopat/safe-type";
 import Fs from "fs-extra";
-import { IsProject, Project } from "./types";
+import { IsProject, Library, Project } from "./types";
 import Path from "path";
 import { DefaultLibraries } from "./default-libraries";
 import { GccDir, SimpleLibraries } from "./locations";
@@ -61,6 +61,40 @@ function Dirname() {
   return split.geninq().last();
 }
 
+async function BuildCppConfig(project: Project, prefix: string) {
+  await Fs.outputJson(
+    Path.join(prefix, ".vscode", "c_cpp_properties.json"),
+    {
+      configurations: [
+        {
+          name: "Mac",
+          includePath: [
+            Path.join("${workspaceFolder}", "**"),
+            Path.join(GccDir(), "propeller-elf", "include"),
+            ...project.build.libraries
+              .geninq()
+              .select((l) =>
+                l.simplelibraries
+                  ? Path.join(SimpleLibraries(), l.include)
+                  : l.include
+              ),
+          ],
+          defines: [],
+          macFrameworkPath: [
+            "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks",
+          ],
+          compilerPath: "/usr/bin/clang",
+          cStandard: "c17",
+          cppStandard: "c++20",
+          intelliSenseMode: "macos-clang-arm64",
+        },
+      ],
+      version: 4,
+    },
+    { spaces: 2 }
+  );
+}
+
 export async function Init(project_name: string, create_dir?: boolean) {
   const prefix =
     (create_dir === undefined && Dirname() === project_name) || !create_dir
@@ -84,37 +118,7 @@ int main()
 }`
   );
 
-  await Fs.outputJson(
-    Path.join(prefix, ".vscode", "c_cpp_properties.json"),
-    {
-      configurations: [
-        {
-          name: "Mac",
-          includePath: [
-            Path.join("${workspaceFolder}", "**"),
-            Path.join(GccDir(), "propeller-elf", "include"),
-            ...default_project.build.libraries
-              .geninq()
-              .select((l) =>
-                l.simplelibraries
-                  ? Path.join(SimpleLibraries(), l.include)
-                  : l.include
-              ),
-          ],
-          defines: [],
-          macFrameworkPath: [
-            "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks",
-          ],
-          compilerPath: "/usr/bin/clang",
-          cStandard: "c17",
-          cppStandard: "c++20",
-          intelliSenseMode: "macos-clang-arm64",
-        },
-      ],
-      version: 4,
-    },
-    { spaces: 2 }
-  );
+  await BuildCppConfig(default_project, prefix);
 
   await Fs.outputJson(
     Path.join(prefix, ".vscode", "tasks.json"),
@@ -124,19 +128,19 @@ int main()
         {
           label: "Build Project",
           type: "shell",
-          command: "prop-proj build --project=EpicFan",
+          command: `prop-proj build --project=${project_name}`,
           group: "build",
         },
         {
           label: "Load Project",
           type: "shell",
-          command: "prop-proj load --project=EpicFan",
+          command: `prop-proj load --project=${project_name}`,
           group: "build",
         },
         {
           label: "Build and Run Project",
           type: "shell",
-          command: "prop-proj play --project=EpicFan",
+          command: `prop-proj play --project=${project_name}`,
           group: "build",
         },
       ],
@@ -157,4 +161,43 @@ export async function Load(project_name: string) {
   const data = await Fs.readJson(`${project_name}.proproj`);
   Assert(IsProject, data);
   return data;
+}
+
+export async function Save(project_name: string, data: Project) {
+  await Fs.writeJson(`${project_name}.proproj`, data, { spaces: 2 });
+  await BuildCppConfig(default_project, ".");
+}
+
+export function WithSimpleLibrary(
+  project: Project,
+  area: string,
+  library: string
+) {
+  const area_data = DefaultLibraries[area];
+  if (!area_data) {
+    return "NoArea" as const;
+  }
+
+  const library_data = area_data.find((l) => l.name === library);
+  if (!library_data) {
+    return "NoLibrary" as const;
+  }
+
+  return {
+    ...project,
+    build: {
+      ...project.build,
+      libraries: [...project.build.libraries, library_data],
+    },
+  };
+}
+
+export function WithLibrary(project: Project, library: Library) {
+  return {
+    ...project,
+    build: {
+      ...project.build,
+      libraries: [...project.build.libraries, library],
+    },
+  };
 }

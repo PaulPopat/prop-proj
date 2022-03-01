@@ -24,4 +24,13 @@ prop-proj init --project=ProjectName --create-dir=false`
       );
     },
   },
+  AreaDoesNotExist(area: string) {
+    console.log(Clc.red.bold(`No area with name ${area}`));
+  },
+  LibraryDoesNotExist(library: string) {
+    console.log(Clc.red.bold(`No library with name ${library}`));
+  },
+  LibraryNotInProject(library: string) {
+    console.log(Clc.yellow(`No library with name ${library} in the project`));
+  }
 };
