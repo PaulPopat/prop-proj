@@ -121,8 +121,9 @@ process.on("unhandledRejection", (reason, p) => {
   console.log("Building GCC");
   await BuildUnixGcc();
 
+  console.log("Compiling application");
   await Execute(
-    `pkg -t ${pkg_platforms[platform]} --output ./build/prop-proj ./dist/index.js`,
+    `pkg -t ${pkg_platforms[platform]} --output ./build/prop-proj .`,
     undefined,
     true
   );

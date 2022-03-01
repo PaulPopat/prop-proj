@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "A tool to build for the propeller platform using propeller-gcc from the command line",
   "main": "dist/index.js",
+  "bin": "dist/index.js",
   "scripts": {
     "build": "tsc && node ./dist/build.js"
   },
@@ -34,5 +35,8 @@
     "fs-extra": "^10.0.0",
     "geninq": "0.0.2",
     "minimist": "^1.2.5"
+  },
+  "pkg": {
+    "scripts": "dist/**/*.js"
   }
 }

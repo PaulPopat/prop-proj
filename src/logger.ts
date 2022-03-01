@@ -12,17 +12,16 @@ Please use one of the standard commands at the start of your app. These are:
 - play (build and load a project)`
     );
   },
-  InvalidCommands: {
-    init() {
-      console.log(
-        Clc.red.bold("Invalid arguments for init."),
-        `
-Init should have the project name and then optionally whether to create a directory or not.
-By default this command will create a directory unless the current working directory is of
-the same name as the project.
-prop-proj init --project=ProjectName --create-dir=false`
-      );
-    },
+  InvalidArguments(command: string, args: object, help_text: string) {
+    console.log(
+      Clc.red.bold(`Invalid arguments for ${command}.\n`),
+      Clc.yellow(
+        `You have input ${JSON.stringify(
+          args
+        )}. Showing the help for the command below.\n`
+      ),
+      help_text
+    );
   },
   AreaDoesNotExist(area: string) {
     console.log(Clc.red.bold(`No area with name ${area}`));
@@ -32,5 +31,5 @@ prop-proj init --project=ProjectName --create-dir=false`
   },
   LibraryNotInProject(library: string) {
     console.log(Clc.yellow(`No library with name ${library} in the project`));
-  }
+  },
 };
