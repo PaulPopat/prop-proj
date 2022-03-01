@@ -4,7 +4,7 @@ import { Load } from "../project";
 
 export const IsArgs = IsObject({
   target: Optional(IsString),
-  project: IsString,
+  project: Optional(IsString),
 });
 
 export async function Command(args: IsType<typeof IsArgs>) {

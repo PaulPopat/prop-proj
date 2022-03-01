@@ -1,9 +1,9 @@
-import { IsObject, IsString, IsType } from "@paulpopat/safe-type";
+import { IsObject, IsString, IsType, Optional } from "@paulpopat/safe-type";
 import { Load, Save, WithLibrary } from "../project";
 import { Ask } from "../utils/console";
 import Logger from "../logger";
 
-export const IsArgs = IsObject({ project: IsString });
+export const IsArgs = IsObject({ project: Optional(IsString) });
 
 export async function Command(args: IsType<typeof IsArgs>) {
   const project = await Load(args.project);

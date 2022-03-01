@@ -54,7 +54,6 @@ export async function CompileApp(project: Project, preset: string) {
   try {
     await Execute(Gcc() + " " + command);
   } catch {
-    console.log("The command was " + command);
     console.log("Compile failed. See output above.");
   }
 }

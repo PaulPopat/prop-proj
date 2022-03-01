@@ -1,9 +1,9 @@
-import { IsObject, IsString, IsType } from "@paulpopat/safe-type";
+import { IsObject, IsString, IsType, Optional } from "@paulpopat/safe-type";
 import { Load, WithSimpleLibrary, Save } from "../project";
 import Logger from "../logger";
 
 export const IsArgs = IsObject({
-  project: IsString,
+  project: Optional(IsString),
   area: IsString,
   library: IsString,
 });

@@ -57,8 +57,13 @@ const default_project: Project = {
 };
 
 function Dirname() {
-  const split = process.cwd().split(Path.delimiter);
-  return split.geninq().last();
+  return process
+    .cwd()
+    .split(Path.delimiter)
+    .geninq()
+    .select_many((l) => l.split("/").geninq())
+    .select_many((l) => l.split("\\").geninq())
+    .last();
 }
 
 async function BuildCppConfig(project: Project, prefix: string) {
@@ -84,8 +89,8 @@ async function BuildCppConfig(project: Project, prefix: string) {
             "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks",
           ],
           compilerPath: "/usr/bin/clang",
-          cStandard: "c17",
-          cppStandard: "c++20",
+          cStandard: "c98",
+          cppStandard: "c++98",
           intelliSenseMode: "macos-clang-arm64",
         },
       ],
@@ -157,13 +162,18 @@ cmm
   );
 }
 
-export async function Load(project_name: string) {
+export async function Load(project_name: string | null | undefined) {
+  project_name = project_name ?? Dirname();
   const data = await Fs.readJson(`${project_name}.proproj`);
   Assert(IsProject, data);
   return data;
 }
 
-export async function Save(project_name: string, data: Project) {
+export async function Save(
+  project_name: string | null | undefined,
+  data: Project
+) {
+  project_name = project_name ?? Dirname();
   await Fs.writeJson(`${project_name}.proproj`, data, { spaces: 2 });
   await BuildCppConfig(default_project, ".");
 }
