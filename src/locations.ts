@@ -11,3 +11,5 @@ export const PropLoader = () => Path.join(resources, "proploader");
 export const SimpleLibraries = () => Path.join(resources, "lib");
 export const GccDir = () => Path.join(resources, "gcc");
 export const Gcc = () => Path.join(GccDir(), "bin", "propeller-elf-c++");
+
+export const Source = () => "src";

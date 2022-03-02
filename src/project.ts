@@ -211,3 +211,19 @@ export function WithLibrary(project: Project, library: Library) {
     },
   };
 }
+
+export function WithSource(project: Project, source: string[]) {
+  const to_add = source
+    .geninq()
+    .where((s) => !project.build.source.geninq().any((p) => p === s));
+  const existing = project.build.source
+    .geninq()
+    .where((s) => source.geninq().any((n) => n === s));
+  return {
+    ...project,
+    build: {
+      ...project.build,
+      source: [...existing, ...to_add],
+    },
+  };
+}

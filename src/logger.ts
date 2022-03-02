@@ -32,4 +32,14 @@ Please use one of the standard commands at the start of your app. These are:
   LibraryNotInProject(library: string) {
     console.log(Clc.yellow(`No library with name ${library} in the project`));
   },
+  UpdateSource: {
+    ScanningStarted() {
+      console.log("Starting a scan of the ./src directory.");
+    },
+    UpdatedSource(count: number) {
+      console.log(
+        `Found ${count} C++ files. Adding to project if they are not already included.`
+      );
+    },
+  },
 };
