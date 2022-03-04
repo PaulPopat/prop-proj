@@ -11,5 +11,3 @@ export async function Command(args: IsType<typeof IsArgs>) {
   const settings = await Load(args.project);
   await CompileApp(settings, args.target ?? "debug");
 }
-
-export const HelpText = ``;

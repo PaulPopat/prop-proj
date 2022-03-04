@@ -10,6 +10,7 @@ import {
   PropLoader,
   SimpleLibraries,
   GccDir,
+  HelpText,
 } from "./locations";
 
 const proploader_path =

@@ -1,7 +1,7 @@
 import { IsObject, IsString, IsType, Optional } from "@paulpopat/safe-type";
+import { Log } from "../logger";
 import { Load, Save, WithLibrary } from "../project";
 import { Ask } from "../utils/console";
-import Logger from "../logger";
 
 export const IsArgs = IsObject({ project: Optional(IsString) });
 
@@ -24,12 +24,11 @@ export async function Command(args: IsType<typeof IsArgs>) {
             project.build.libraries.geninq().any((l) => l.name === dependency)
           )
             yield dependency;
-          else if (dependency) Logger.LibraryNotInProject(dependency);
+          else if (dependency)
+            await Log("add-library/not-in-project", { library: dependency });
           else return;
         }
       })().array(),
     })
   );
 }
-
-export const HelpText = ``;

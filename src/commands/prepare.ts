@@ -6,5 +6,3 @@ export const IsArgs = IsObject({ project: Optional(IsString) });
 export async function Command(args: IsType<typeof IsArgs>) {
   await Save(args.project, await Load(args.project));
 }
-
-export const HelpText = ``;

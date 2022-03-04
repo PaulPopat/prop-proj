@@ -1,0 +1,9 @@
+<paragraph>
+  Init should have the project name and then optionally
+  whether to create a directory or not. By default this
+  command will create a directory unless the current
+  working directory is of the same name as the project.
+</paragraph>
+<paragraph>
+  prop-proj init --project=ProjectName --create-dir=false
+</paragraph>

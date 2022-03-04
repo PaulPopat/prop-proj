@@ -1,0 +1,17 @@
+<paragraph>
+  <clc red bold>
+    Invalid arguments for {command}.
+  </clc>
+</paragraph>
+<paragraph>
+  <clc yellow>
+    You have input {JSON.stringify(args)}.
+    See help text for command below
+  </clc>
+</paragraph>
+<paragraph>
+  <br />
+  ================
+  <br />
+</paragraph>
+<span>{load("commands/" + command)}</span>

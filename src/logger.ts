@@ -1,45 +1,69 @@
-import Clc from "cli-color";
+import "geninq";
+import Path from "path";
+import Fs from "fs-extra";
+import { HelpText } from "./locations";
+import { RenderXml } from "./utils/xml";
+import object from "./utils/object";
 
-export default {
-  InvalidCommand(command: string) {
-    console.log(
-      Clc.red.bold(`Your command of ${command} is invalid.`),
-      `
-Please use one of the standard commands at the start of your app. These are:
-- init (initialise a new project)
-- build (build the program using propeller GCC)
-- load (load the most recent build onto your propeller chip)
-- play (build and load a project)`
+export function* GetExpressions(value: string) {
+  let current = "";
+  let depth = 0;
+  for (const char of value) {
+    if (char === "}") {
+      depth -= 1;
+
+      if (depth === 0) {
+        yield current;
+        current = "";
+      }
+    }
+
+    if (depth > 0) {
+      current += char;
+    }
+
+    if (char === "{") {
+      depth += 1;
+    }
+  }
+}
+
+const AsyncFunction = Object.getPrototypeOf(async function () {}).constructor;
+async function Evaluate(
+  expression: string,
+  data: { name: string; value: any }[]
+) {
+  return await new AsyncFunction(
+    ...data
+      .geninq()
+      .select((d) => d.name)
+      .append("return " + expression)
+  )(...data.geninq().select((d) => d.value));
+}
+
+async function Load(url: string, data: Record<string, string>) {
+  const path = Path.join(HelpText(), url + ".xml");
+  if (!(await Fs.pathExists(path))) {
+    console.log(path + " does not exist.");
+    process.exit(1);
+  }
+
+  let text = await Fs.readFile(path, "utf-8");
+  text = text.replace(/\s+/gm, " ");
+
+  for (const expression of GetExpressions(text)) {
+    text = text.replace(
+      `{${expression}}`,
+      await Evaluate(expression, [
+        ...object.Keys(data).select((key) => ({ name: key, value: data[key] })),
+        { name: "load", value: (url: string) => Load(url, data) },
+      ])
     );
-  },
-  InvalidArguments(command: string, args: object, help_text: string) {
-    console.log(
-      Clc.red.bold(`Invalid arguments for ${command}.\n`),
-      Clc.yellow(
-        `You have input ${JSON.stringify(
-          args
-        )}. Showing the help for the command below.\n`
-      ),
-      help_text
-    );
-  },
-  AreaDoesNotExist(area: string) {
-    console.log(Clc.red.bold(`No area with name ${area}`));
-  },
-  LibraryDoesNotExist(library: string) {
-    console.log(Clc.red.bold(`No library with name ${library}`));
-  },
-  LibraryNotInProject(library: string) {
-    console.log(Clc.yellow(`No library with name ${library} in the project`));
-  },
-  UpdateSource: {
-    ScanningStarted() {
-      console.log("Starting a scan of the ./src directory.");
-    },
-    UpdatedSource(count: number) {
-      console.log(
-        `Found ${count} C++ files. Adding to project if they are not already included.`
-      );
-    },
-  },
-};
+  }
+
+  return RenderXml(text);
+}
+
+export async function Log(url: string, data: Record<string, string>) {
+  console.log(await Load(url, data));
+}

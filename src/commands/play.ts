@@ -8,5 +8,3 @@ export async function Command(args: IsType<typeof IsArgs>) {
   await BuildCommand({ ...args, target: undefined });
   await LoadCommand(args);
 }
-
-export const HelpText = ``;

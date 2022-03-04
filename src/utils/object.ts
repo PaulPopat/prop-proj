@@ -1,5 +1,7 @@
 export default {
-  Keys<T>(target: T): (keyof T)[] {
-    return Object.keys(target) as any;
+  *Keys<T>(target: T) {
+    for (const key of Object.keys(target)) {
+      yield key as keyof T;
+    }
   },
 };

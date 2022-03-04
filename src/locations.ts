@@ -13,3 +13,4 @@ export const GccDir = () => Path.join(resources, "gcc");
 export const Gcc = () => Path.join(GccDir(), "bin", "propeller-elf-c++");
 
 export const Source = () => "src";
+export const HelpText = () => Path.join(__dirname, "../help-text");
