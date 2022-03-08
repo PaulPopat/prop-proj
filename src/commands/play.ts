@@ -1,10 +1,12 @@
-import { IsObject, IsString, IsType } from "@paulpopat/safe-type";
-import { Command as BuildCommand } from "./build";
-import { Command as LoadCommand } from "./load";
+import { IsObject, IsString, IsType, Optional } from "@paulpopat/safe-type";
+import { CompileApp } from "../compiler";
+import { Load } from "../project";
+import { LoadApp } from "../runner";
 
-export const IsArgs = IsObject({ project: IsString });
+export const IsArgs = IsObject({ project: Optional(IsString), serial: IsString  });
 
 export async function Command(args: IsType<typeof IsArgs>) {
-  await BuildCommand({ ...args, target: undefined });
-  await LoadCommand(args);
+  const settings = await Load(args.project);
+  await CompileApp(settings, "debug");
+  await LoadApp(settings, true, `/dev/cu.usbserial-${args.serial}`);
 }

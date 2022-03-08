@@ -1,7 +1,10 @@
 import { IsObject, IsString, IsType, Optional } from "@paulpopat/safe-type";
+import { Load } from "../project";
+import { LoadApp } from "../runner";
 
-export const IsArgs = IsObject({ project: Optional(IsString) });
+export const IsArgs = IsObject({ project: Optional(IsString), serial: IsString });
 
 export async function Command(args: IsType<typeof IsArgs>) {
-  throw new Error("This feature is not implemented yet.");
+  const settings = await Load(args.project);
+  await LoadApp(settings, false, `/dev/cu.usbserial-${args.serial}`);
 }

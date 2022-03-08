@@ -54,6 +54,9 @@ const default_project: Project = {
     runtime_types: true,
     doubles: 32,
   },
+  run: {
+    board: "default:default",
+  },
 };
 
 function Dirname() {
@@ -157,7 +160,7 @@ int main()
     Path.join(prefix, ".gitignore"),
     `.vscode/c_cpp_properties.json
 .vscode/tasks.json
-cmm
+bin
 **/.DS_Store`
   );
 }

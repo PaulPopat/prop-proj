@@ -1,9 +1,10 @@
 import "geninq";
-import { Gcc, SimpleLibraries } from "./locations";
+import { Build, BuildDir, Gcc, SimpleLibraries } from "./locations";
 import { Project } from "./types";
 import Path from "path";
 import { Execute } from "./utils/child-process";
 import Fs from "fs-extra";
+import { Log } from "./logger";
 
 function BuildCommand(project: Project, preset: string) {
   const flags = project.build.presets[preset];
@@ -22,7 +23,7 @@ function BuildCommand(project: Project, preset: string) {
           : l
       )
       .select_many((l) => [`-I ${l.include}`, `-L ${l.linker}`].geninq()),
-    "-o cmm/build.elf",
+    "-o " + Build(),
     `-O${flags.optimisation}`,
     `-m${flags.memory}`,
     `-m${project.build.doubles}bit-doubles`,
@@ -45,15 +46,15 @@ function BuildCommand(project: Project, preset: string) {
 }
 
 export async function CompileApp(project: Project, preset: string) {
-  if (!(await Fs.pathExists("cmm"))) {
-    await Fs.mkdir("cmm");
+  if (!(await Fs.pathExists(BuildDir()))) {
+    await Fs.mkdir(BuildDir());
   }
 
-  console.log("Compiling with propeller-gcc");
+  await Log("compiling-app", {});
   const command = BuildCommand(project, preset);
   try {
     await Execute(Gcc() + " " + command);
   } catch {
-    console.log("Compile failed. See output above.");
+    await Log("compile-failed", {});
   }
 }
