@@ -7,7 +7,4 @@
   Please use one of the standard commands at
   the start of your app. These are:
 </paragraph>
-<li>init (initialise a new project)</li>
-<li>build (build the program using propeller GCC)</li>
-<li>load (load the most recent build onto your propeller chip)</li>
-<li>play (build and load a project)</li>
+<span>{load("commands")}</span>

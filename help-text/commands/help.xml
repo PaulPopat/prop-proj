@@ -1,0 +1,18 @@
+<paragraph>
+  Run `prop-proj init --project=PROJECT_NAME` to initialise a new project.
+  This will create a new directory unless the CWD is of the same name as the project,
+  in which case the project will be created inline. The `.gitignore` file that is made
+  will include some items in the `.vscode` directory. This is intentional as these
+  should be generated on each machine separately.
+</paragraph>
+<paragraph>
+  To load an existing project on to your computer, run `prop-proj prepare` to set up
+  the build tasks and intellisence in VSCode.
+</paragraph>
+<paragraph>
+  Once you have your project prepared, you should be able to find the build tasks in
+  VSCode and these should be used to build, run, and load your project onto a chip.
+  Below is a list of all of the available commands for when working form the CLI or
+  performing advanced actions.
+</paragraph>
+<span>{load("commands")}</span>

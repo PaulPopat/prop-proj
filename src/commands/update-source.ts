@@ -16,7 +16,7 @@ export async function Command(args: IsType<typeof IsArgs>) {
     .array();
   const result = WithSource(project, source);
   await Save(args.project, result);
-  await Log("update-source/updated-source", { count: source.length.toString() });
+  await Log("update-source/updated-source", {
+    count: source.length.toString(),
+  });
 }
-
-export const HelpText = ``;

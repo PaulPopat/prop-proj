@@ -1,0 +1,9 @@
+<li>add-library (Add a custom library to the project. Will prompt for include and linker pathhs)</li>
+<li>add-simple-library (Add a Simple Tools library to the project. These are included in the distrobution)</li>
+<li>build (Build the current project)</li>
+<li>init (Create a new project)</li>
+<li>list-devices (List all devices attached to your machine that are recognised as a programmer)</li>
+<li>load (Load the current build to EEPROM)</li>
+<li>play (Build and run the current project in RAM)</li>
+<li>prepare (Generate build tasks and VSCode intellisence for the current machine)</li>
+<li>update-source (Scan the `./src` directory and add or remove `.cpp` files as relevant)</li>
