@@ -87,7 +87,7 @@ async function BuildCppConfig(
         {
           label: `Build ${project_name}`,
           type: "shell",
-          command: `prop-proj build --project=${project_name}`,
+          command: `prop-proj build --project=${project_name} --target=production`,
           group: "build",
         },
         {
