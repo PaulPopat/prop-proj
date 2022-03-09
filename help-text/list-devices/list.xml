@@ -1,0 +1,3 @@
+<paragraph>Below are the serial devices that can be used to program a chip.</paragraph>
+<paragraph>Use them in the play and load commands as --serial=SERIAL_DEVICE.</paragraph>
+<paragraph>{devices}</paragraph>
