@@ -20,5 +20,10 @@ export async function RunCommand(command: string, args: string[]) {
     process.exit(1);
   }
 
-  await Command(parsed);
+  try {
+    await Command(parsed);
+  } catch {
+    await Log("command-failed", { args: parsed, command });
+    process.exit(1);
+  }
 }

@@ -1,0 +1,6 @@
+<paragraph>
+  Build a project with the specified target, or debug by default. Target and project are optional. See example below.
+</paragraph>
+<paragraph>
+  prop-proj build --project=PROJECT_NAME --target=production
+</paragraph>

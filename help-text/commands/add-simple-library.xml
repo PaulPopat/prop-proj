@@ -1,0 +1,75 @@
+<paragraph>
+  Add a library from Simple Tools to the project.
+  Requires an area and the library name itself.
+  See the list of available libraries below.
+</paragraph>
+<li><clc green>Audio</clc></li>
+<li><li>sound</li></li>
+<li><li>text2speech</li></li>
+<li><li>wavplayer</li></li>
+<li><clc green>Convert</clc></li>
+<li><li>abvolts</li></li>
+<li><li>adcACpropab</li></li>
+<li><li>adcDCpropab</li></li>
+<li><li>dac2ch</li></li>
+<li><li>dacctr</li></li>
+<li><li>pwm2ch</li></li>
+<li><clc green>Display</clc></li>
+<li><li>il3820</li></li>
+<li><li>oledc</li></li>
+<li><li>oledc_fontLoader</li></li>
+<li><li>simplegfx</li></li>
+<li><li>ssd1331</li></li>
+<li><li>vgatext</li></li>
+<li><clc green>Interface</clc></li>
+<li><li>keypad</li></li>
+<li><clc green>Light</clc></li>
+<li><li>ws2812</li></li>
+<li><clc green>Misc</clc></li>
+<li><li>mstimer</li></li>
+<li><clc green>Motor</clc></li>
+<li><li>servo</li></li>
+<li><li>servo360</li></li>
+<li><li>servoAux</li></li>
+<li><li>servodiffdrive</li></li>
+<li><clc green>Network</clc></li>
+<li><li>wifi</li></li>
+<li><clc green>Protocol</clc></li>
+<li><li>i2cslave</li></li>
+<li><li>simplei2c</li></li>
+<li><clc green>Remote</clc></li>
+<li><li>sirc</li></li>
+<li><clc green>Robotics</clc></li>
+<li><li>abcalibrate</li></li>
+<li><li>abdrive</li></li>
+<li><clc green>Sensor</clc></li>
+<li><li>bme680</li></li>
+<li><li>colorpal</li></li>
+<li><li>compass3d</li></li>
+<li><li>dht22</li></li>
+<li><li>fingerprint</li></li>
+<li><li>gps</li></li>
+<li><li>lis3dh</li></li>
+<li><li>lsm9ds1</li></li>
+<li><li>mma7455</li></li>
+<li><li>mx2125</li></li>
+<li><li>ping</li></li>
+<li><li>rfidser</li></li>
+<li><li>soundimpact</li></li>
+<li><li>badgetools</li></li>
+<li><li>badgewxtools</li></li>
+<li><clc green>TextDevices</clc></li>
+<li><li>fdserial</li></li>
+<li><li>simpletext</li></li>
+<li><clc green>Time</clc></li>
+<li><li>datetime</li></li>
+<li><clc green>Utility</clc></li>
+<li><li>colormath</li></li>
+<li><li>simpletools</li></li>
+<li><li>stacktest</li></li>
+<paragraph>
+  <clc yellow>See an example usage below</clc>
+</paragraph>
+<paragraph>
+  prop-proj add-simple-library --area=Utility --library=simpletools
+</paragraph>

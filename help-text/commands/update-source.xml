@@ -1,0 +1,3 @@
+<paragraph>
+  Scans the ./src directory and loads any .cpp files found into the project.
+</paragraph>

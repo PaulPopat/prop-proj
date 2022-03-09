@@ -1,0 +1,6 @@
+<paragraph>
+  Loads the current build into a device EEPROM.
+  The serial code for the device must be supplied.
+  See 'list-devices' for the codes for your machine.
+</paragraph>
+<paragraph>prop-proj load --serial=PU8123U</paragraph>

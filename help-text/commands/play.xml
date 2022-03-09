@@ -1,0 +1,6 @@
+<paragraph>
+  Builds the current project in debug mode and loads it into a device RAM.
+  The serial code for the device must be supplied.
+  See 'list-devices' for the codes for your machine.
+</paragraph>
+<paragraph>prop-proj play --serial=PU8123U</paragraph>

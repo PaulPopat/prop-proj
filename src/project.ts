@@ -153,7 +153,7 @@ async function GetDefaultDevice() {
 
   if (devices.length === 0) {
     await Log("project/no-devices", {});
-    process.exit(1);
+    throw new Error("Command failed");
   }
 
   await Log("list-devices/list", {

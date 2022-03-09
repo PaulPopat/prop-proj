@@ -1,0 +1,4 @@
+<paragraph>
+  Prepares the relevant files for opening the directory in VSCode.
+  Should be run when loading on to a new machine.
+</paragraph>

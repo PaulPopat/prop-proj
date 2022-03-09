@@ -25,7 +25,7 @@ export async function LoadApp(project: Project, run: boolean, port: string) {
   await Log("loading-app", {});
   if (!(await Fs.pathExists(Build()))) {
     await Log("not-compiled", {});
-    process.exit(1);
+    throw new Error("Command failed");
   }
 
   try {

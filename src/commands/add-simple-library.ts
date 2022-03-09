@@ -13,12 +13,12 @@ export async function Command(args: IsType<typeof IsArgs>) {
   const result = WithSimpleLibrary(settings, args.area, args.library);
   if (result === "NoArea") {
     await Log("add-simple-library/no-area", { area: args.area });
-    return;
+    throw new Error("Command failed");
   }
 
   if (result === "NoLibrary") {
     await Log("add-simple-library/does-not-exist", { library: args.library });
-    return;
+    throw new Error("Command failed");
   }
 
   await Save(args.project, result);
