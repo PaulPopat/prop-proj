@@ -42,5 +42,5 @@ export async function GetAllDevices() {
   return result
     .split("\n")
     .filter((r) => r)
-    .map((r) => "- " + r.split("-")[1]);
+    .map((r) => r.split("-")[1]);
 }

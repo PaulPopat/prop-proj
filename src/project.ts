@@ -5,6 +5,9 @@ import { IsProject, Library, Project } from "./types";
 import Path from "path";
 import { DefaultLibraries } from "./default-libraries";
 import { GccDir, SimpleLibraries } from "./locations";
+import { GetAllDevices } from "./runner";
+import { Log } from "./logger";
+import { Ask } from "./utils/console";
 
 const basic_libraries = [
   {
@@ -69,7 +72,46 @@ function Dirname() {
     .last();
 }
 
-async function BuildCppConfig(project: Project, prefix: string) {
+async function BuildCppConfig(
+  project: Project,
+  prefix: string,
+  project_name: string
+) {
+  const default_device = await GetDefaultDevice();
+
+  await Fs.outputJson(
+    Path.join(prefix, ".vscode", "tasks.json"),
+    {
+      version: "2.0.0",
+      tasks: [
+        {
+          label: `Build ${project_name}`,
+          type: "shell",
+          command: `prop-proj build --project=${project_name}`,
+          group: "build",
+        },
+        {
+          label: `Load ${project_name}`,
+          type: "shell",
+          command: `prop-proj load --project=${project_name} --serial=${default_device}`,
+          group: "build",
+        },
+        {
+          label: `Build and Run ${project_name}`,
+          type: "shell",
+          command: `prop-proj play --project=${project_name} --serial=${default_device}`,
+          group: "build",
+        },
+        {
+          label: `Update Source for ${project_name}`,
+          type: "shell",
+          command: `prop-proj update-source --project=${project_name}`,
+        },
+      ],
+    },
+    { spaces: 2 }
+  );
+
   await Fs.outputJson(
     Path.join(prefix, ".vscode", "c_cpp_properties.json"),
     {
@@ -103,6 +145,23 @@ async function BuildCppConfig(project: Project, prefix: string) {
   );
 }
 
+async function GetDefaultDevice() {
+  const devices = await GetAllDevices();
+  if (devices.length === 1) {
+    return devices[0];
+  }
+
+  if (devices.length === 0) {
+    await Log("project/no-devices", {});
+    process.exit(1);
+  }
+
+  await Log("list-devices/list", {
+    devices: devices.map((d) => "- " + d).join("\n"),
+  });
+  return await Ask("Which device would you like to use?");
+}
+
 export async function Init(project_name: string, create_dir?: boolean) {
   const prefix =
     (create_dir === undefined && Dirname() === project_name) || !create_dir
@@ -126,35 +185,7 @@ int main()
 }`
   );
 
-  await BuildCppConfig(default_project, prefix);
-
-  await Fs.outputJson(
-    Path.join(prefix, ".vscode", "tasks.json"),
-    {
-      version: "2.0.0",
-      tasks: [
-        {
-          label: "Build Project",
-          type: "shell",
-          command: `prop-proj build --project=${project_name}`,
-          group: "build",
-        },
-        {
-          label: "Load Project",
-          type: "shell",
-          command: `prop-proj load --project=${project_name}`,
-          group: "build",
-        },
-        {
-          label: "Build and Run Project",
-          type: "shell",
-          command: `prop-proj play --project=${project_name}`,
-          group: "build",
-        },
-      ],
-    },
-    { spaces: 2 }
-  );
+  await BuildCppConfig(default_project, prefix, project_name);
 
   await Fs.outputFile(
     Path.join(prefix, ".gitignore"),
@@ -178,7 +209,7 @@ export async function Save(
 ) {
   project_name = project_name ?? Dirname();
   await Fs.writeJson(`${project_name}.proproj`, data, { spaces: 2 });
-  await BuildCppConfig(default_project, ".");
+  await BuildCppConfig(default_project, ".", project_name);
 }
 
 export function WithSimpleLibrary(
