@@ -3,70 +3,71 @@
   Requires an area and the library name itself.
   See the list of available libraries below.
 </paragraph>
-<li><clc green>Audio</clc></li>
-<li><li>sound</li></li>
-<li><li>text2speech</li></li>
-<li><li>wavplayer</li></li>
-<li><clc green>Convert</clc></li>
-<li><li>abvolts</li></li>
-<li><li>adcACpropab</li></li>
-<li><li>adcDCpropab</li></li>
-<li><li>dac2ch</li></li>
-<li><li>dacctr</li></li>
-<li><li>pwm2ch</li></li>
-<li><clc green>Display</clc></li>
-<li><li>il3820</li></li>
-<li><li>oledc</li></li>
-<li><li>oledc_fontLoader</li></li>
-<li><li>simplegfx</li></li>
-<li><li>ssd1331</li></li>
-<li><li>vgatext</li></li>
-<li><clc green>Interface</clc></li>
-<li><li>keypad</li></li>
-<li><clc green>Light</clc></li>
-<li><li>ws2812</li></li>
-<li><clc green>Misc</clc></li>
-<li><li>mstimer</li></li>
-<li><clc green>Motor</clc></li>
-<li><li>servo</li></li>
-<li><li>servo360</li></li>
-<li><li>servoAux</li></li>
-<li><li>servodiffdrive</li></li>
-<li><clc green>Network</clc></li>
-<li><li>wifi</li></li>
-<li><clc green>Protocol</clc></li>
-<li><li>i2cslave</li></li>
-<li><li>simplei2c</li></li>
-<li><clc green>Remote</clc></li>
-<li><li>sirc</li></li>
-<li><clc green>Robotics</clc></li>
-<li><li>abcalibrate</li></li>
-<li><li>abdrive</li></li>
-<li><clc green>Sensor</clc></li>
-<li><li>bme680</li></li>
-<li><li>colorpal</li></li>
-<li><li>compass3d</li></li>
-<li><li>dht22</li></li>
-<li><li>fingerprint</li></li>
-<li><li>gps</li></li>
-<li><li>lis3dh</li></li>
-<li><li>lsm9ds1</li></li>
-<li><li>mma7455</li></li>
-<li><li>mx2125</li></li>
-<li><li>ping</li></li>
-<li><li>rfidser</li></li>
-<li><li>soundimpact</li></li>
-<li><li>badgetools</li></li>
-<li><li>badgewxtools</li></li>
-<li><clc green>TextDevices</clc></li>
-<li><li>fdserial</li></li>
-<li><li>simpletext</li></li>
-<li><clc green>Time</clc></li>
-<li><li>datetime</li></li>
-<li><clc green>Utility</clc></li>
-<li><li>colormath</li></li>
-<li><li>simpletools</li></li>
-<li><li>stacktest</li></li>
+<paragraph><clc green>Audio</clc></paragraph>
+<li>sound</li>
+<li>text2speech</li>
+<li>wavplayer</li>
+<paragraph><clc green>Convert</clc></paragraph>
+<li>abvolts</li>
+<li>adcACpropab</li>
+<li>adcDCpropab</li>
+<li>dac2ch</li>
+<li>dacctr</li>
+<li>pwm2ch</li>
+<paragraph><clc green>Display</clc></paragraph>
+<li>il3820</li>
+<li>lcdParallel</li>
+<li>oledc</li>
+<li>oledc_fontLoader</li>
+<li>simplegfx</li>
+<li>ssd1331</li>
+<li>vgatext</li>
+<paragraph><clc green>Interface</clc></paragraph>
+<li>keypad</li>
+<paragraph><clc green>Light</clc></paragraph>
+<li>ws2812</li>
+<paragraph><clc green>Misc</clc></paragraph>
+<li>mstimer</li>
+<paragraph><clc green>Motor</clc></paragraph>
+<li>servo</li>
+<li>servo360</li>
+<li>servoAux</li>
+<li>servodiffdrive</li>
+<paragraph><clc green>Network</clc></paragraph>
+<li>wifi</li>
+<paragraph><clc green>Protocol</clc></paragraph>
+<li>i2cslave</li>
+<li>simplei2c</li>
+<paragraph><clc green>Remote</clc></paragraph>
+<li>sirc</li>
+<paragraph><clc green>Robotics</clc></paragraph>
+<li>abcalibrate</li>
+<li>abdrive</li>
+<paragraph><clc green>Sensor</clc></paragraph>
+<li>bme680</li>
+<li>colorpal</li>
+<li>compass3d</li>
+<li>dht22</li>
+<li>fingerprint</li>
+<li>gps</li>
+<li>lis3dh</li>
+<li>lsm9ds1</li>
+<li>mma7455</li>
+<li>mx2125</li>
+<li>ping</li>
+<li>rfidser</li>
+<li>soundimpact</li>
+<li>badgetools</li>
+<li>badgewxtools</li>
+<paragraph><clc green>TextDevices</clc></paragraph>
+<li>fdserial</li>
+<li>simpletext</li>
+<paragraph><clc green>Time</clc></paragraph>
+<li>datetime</li>
+<paragraph><clc green>Utility</clc></paragraph>
+<li>colormath</li>
+<li>simpletools</li>
+<li>stacktest</li>
 <paragraph>
   <clc yellow>See an example usage below</clc>
 </paragraph>

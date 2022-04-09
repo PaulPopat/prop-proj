@@ -78,6 +78,13 @@ export const DefaultLibraries: Record<string, Library[]> = {
     },
     {
       simplelibraries: true,
+      name: "lcdParallel",
+      include: "Display/liblcdParallel",
+      linker: "Display/liblcdParallel/cmm",
+      depends: ["m"],
+    },
+    {
+      simplelibraries: true,
       name: "oledc",
       include: "Display/liboledc",
       linker: "Display/liboledc/cmm",
