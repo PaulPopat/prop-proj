@@ -112,8 +112,10 @@ async function BuildCppConfig(
     { spaces: 2 }
   );
 
+  const properties_path = Path.join(prefix, ".vscode", "c_cpp_properties.json");
+  if (await Fs.pathExists(properties_path)) await Fs.remove(properties_path);
   await Fs.outputJson(
-    Path.join(prefix, ".vscode", "c_cpp_properties.json"),
+    properties_path,
     {
       configurations: [
         {
@@ -209,7 +211,7 @@ export async function Save(
 ) {
   project_name = project_name ?? Dirname();
   await Fs.writeJson(`${project_name}.proproj`, data, { spaces: 2 });
-  await BuildCppConfig(default_project, ".", project_name);
+  await BuildCppConfig(data, ".", project_name);
 }
 
 export function WithSimpleLibrary(
