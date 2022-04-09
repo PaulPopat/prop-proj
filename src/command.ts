@@ -22,8 +22,9 @@ export async function RunCommand(command: string, args: string[]) {
 
   try {
     await Command(parsed);
-  } catch {
+  } catch (err) {
     await Log("command-failed", { args: parsed, command });
+    console.error(err);
     process.exit(1);
   }
 }

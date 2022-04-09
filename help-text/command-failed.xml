@@ -15,3 +15,8 @@
   <br />
 </paragraph>
 <span>{load("commands/" + command)}</span>
+<paragraph>
+  <br />
+  ================
+  <br />
+</paragraph>
