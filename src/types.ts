@@ -20,6 +20,13 @@ export const IsLibrary = IsObject({
 
 export type Library = IsType<typeof IsLibrary>;
 
+const IsStd = IsRecord(
+  IsUnion(IsLiteral("maths"), IsLiteral("parallel"), IsLiteral("tiny")),
+  IsBoolean
+);
+
+export type Std = IsType<typeof IsStd>;
+
 const IsBoard = IsUnion(
   IsLiteral("default:default"),
   IsLiteral("rcfast"),
@@ -53,10 +60,7 @@ export const IsProject = IsObject({
         fast_cache: IsBoolean,
       })
     ),
-    use: IsRecord(
-      IsUnion(IsLiteral("maths"), IsLiteral("parallel"), IsLiteral("tiny")),
-      IsBoolean
-    ),
+    use: IsStd,
     runtime_types: IsBoolean,
     doubles: IsUnion(IsLiteral(32), IsLiteral(64)),
   }),

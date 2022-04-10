@@ -1,10 +1,22 @@
 import "geninq";
 import { Build, BuildDir, Gcc, SimpleLibraries } from "./locations";
-import { Project } from "./types";
+import { Project, Library, Std } from "./types";
 import Path from "path";
 import { Execute } from "./utils/child-process";
 import Fs from "fs-extra";
 import { Log } from "./logger";
+
+function BuildLibrary(library: Library) {
+  return library.depends.map((d) => "-l" + d).join(" ") + " -l" + library.name;
+}
+
+function BuildLinker(libraries: Library[]) {
+  return libraries
+    .map((l) => [BuildLibrary(l), l] as const)
+    .sort(([as, al], [bs, bl]) => (as.includes(bl.name) ? -1 : 1))
+    .map(([s, l]) => s)
+    .join(" ");
+}
 
 function BuildCommand(project: Project, preset: string) {
   const flags = project.build.presets[preset];
@@ -30,12 +42,7 @@ function BuildCommand(project: Project, preset: string) {
     "-fno-exceptions",
     project.build.runtime_types ? "-fno-rtti" : undefined,
     ...project.build.source,
-    ...project.build.libraries.geninq().select_many((l) =>
-      l.depends
-        .geninq()
-        .select((l) => "-l" + l)
-        .append("-l" + l.name)
-    ),
+    BuildLinker(project.build.libraries),
     project.build.use.maths ? "-lm" : undefined,
     project.build.use.parallel ? "-lpthread" : undefined,
     project.build.use.tiny ? "-ltiny" : undefined,
@@ -56,5 +63,6 @@ export async function CompileApp(project: Project, preset: string) {
     await Execute(Gcc() + " " + command);
   } catch {
     await Log("compile-failed", {});
+    console.log("The command was:\n" + command);
   }
 }
